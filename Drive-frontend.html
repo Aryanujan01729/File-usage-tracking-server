@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" class="file-data">
+    <button onclick="take()" >Add file</button>
+    <script src="Drive-backend.js"></script> 
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload PDF</title>
+</head>
+<body>
+    <h1>Upload PDF</h1>
+    <form id="uploadForm">
+        <input type="file" id="pdf" name="pdf" accept="application/pdf" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData();
+            const fileField = document.querySelector('input[type="file"]');
+            
+            formData.append('pdf', fileField.files[0]);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => {
+                console.log('Success:', result);
+                alert('File uploaded successfully');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('File upload failed');
+            });
+        });
+    </script>
+</body>
+</html>

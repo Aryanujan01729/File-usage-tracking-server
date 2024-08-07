@@ -1,0 +1,4 @@
+install multer
+install express
+install ejs
+install path
